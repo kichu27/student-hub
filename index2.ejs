@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        #messageForm {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        #messageForm label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+        #messageForm input[type="text"],
+        #messageForm textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+            resize: vertical;
+        }
+        #messageForm button {
+            background-color: #0bad39;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        #messageForm button:hover {
+            background-color: #039603;
+        }
+        #messageList {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+        #messageList li {
+            background-color: #fff;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        #messageList li strong {
+            color: #60ed4a;
+        }
+
+        button {
+            background-color: #0bad39;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .go-back {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007bff;
+            border: 1px solid #007bff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+          }
+      
+          .go-back:hover {
+            background-color: #007bff;
+            color: #fff;
+          }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Message Form</h2>
+        <form id="messageForm" action="/submit-message" method="post">
+            <label for="sender">Sender:</label>
+            <input type="text" id="sender" name="sender" required><br><br>
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" rows="4" required></textarea><br><br>
+            <button type="submit">Submit</button>
+        </form>
+
+        <h2>Messages</h2>
+        <ul id="messageList">
+            <% messages.forEach(message => { %>
+                <li><strong><%= message.sender %>:</strong> <%= message.message %> (<%= message.timestamp %>)</li>
+            <% }); %>
+        </ul>
+
+        <form id="clearChatForm" action="/clear-chat" method="post">
+            <button type="submit">Clear Chat</button>
+        </form>
+        <a href="/user" class="go-back"> Go Back</a>
+
+    </div>
+</body>
+</html>

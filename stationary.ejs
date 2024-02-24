@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List of Businesses</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(90deg, rgba(233,190,238,1) 0%, rgba(215,189,225,1) 14%, rgba(56,177,178,1) 79%, rgba(34,213,136,1) 100%);
+        }
+
+        .container {
+            margin-top: 100px;
+            width: 80%;
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .business-container {
+            width: 100%;
+            background-color: #fff;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .business-header {
+            padding: 20px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .cta-button {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 10px;
+            text-align: center;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            margin-bottom: 150px;
+        }
+        .cta-button:hover {
+            background-color: #0056b3;
+        }
+
+        .business-details {
+            padding: 20px;
+        }
+
+        .business-container:last-child {
+            margin-bottom: 0;
+        }
+
+        .business-container:hover {
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .business-container h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        .business-container p {
+            margin: 5px 0;
+            color: #666;
+        }
+
+        .business-container strong {
+            font-weight: bold;
+            color: #000;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+    
+        <% businesses.forEach(business => { %>
+            <div class="business-container">
+                <div class="business-header">
+                    <h2><%= business.ShopName %></h2>
+                </div>
+                <div class="business-details">
+                    <p><strong>Owner Name:</strong> <%= business.OwnerName %></p>
+                    <p><strong>Email:</strong> <%= business.Email %></p>
+                    <p><strong>Phone:</strong> <%= business.Phone %></p>
+                    <p><strong>Address:</strong> <%= business.Address %></p>
+                    <p><strong>Category:</strong> <%= business.Category %></p>
+                    <p><strong>Description:</strong> <%= business.Description %></p>
+                    <p><strong>Opening Hours:</strong> <%= business.OpeningHours %></p>
+                    <p><strong>Website:</strong> <a href="<%= business.Website %>"><%= business.Website %></a></p>
+                    <p><strong>Logo URL:</strong> <a href="<%= business.LogoURL %>"><%= business.LogoURL %></a></p>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+    <a href="/search" class="cta-button">Go Back</a>
+</body>
+</html>

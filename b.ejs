@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog</title>
+    <style>
+
+
+        .container{
+
+            border-radius: 20px;
+            
+            background: linear-gradient(90deg, rgba(233,190,238,1) 0%, rgba(215,189,225,1) 14%, rgba(56,177,178,1) 79%, rgba(34,213,136,1) 100%);
+        }
+    </style>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f8f8f8; margin: 0; padding: 0;">
+
+<div class="container" style="width: 80%; margin: 20px auto;">
+    <h1 style="text-align: center; color: #333;">List of Blogs</h1>
+    <% if (blog.length > 0) { %>
+        <ul style="list-style-type: none; padding: 0;">
+            <% blog.forEach(blog => { %>
+                <li style="background-color: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); margin-bottom: 20px; padding: 20px;">
+                    <h2 style="color: #007bff; margin-top: 0;"><%= blog.title %></h2>
+                    <p style="color: #555;"><%= blog.content %></p>
+                </li>
+            <% }) %>
+        </ul>
+    <% } else { %>
+        <p>No blogs found.</p>
+    <% } %>
+</div>
+
+</body>
+</html>

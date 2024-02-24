@@ -1,0 +1,57 @@
+/* Styles for container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* Styles for headings */
+  .heads1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+  
+  /* Styles for tables */
+  .table1 {
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+  }
+  
+  .table1 td {
+    padding: 8px;
+    border: 1px solid #ddd;
+  }
+  
+  /* Styles for footer */
+  .footer-area {
+    background-color: #003a6a;
+    color: #fff;
+    padding: 20px 0;
+  }
+  
+  .footer-widget-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .footer-menu {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .footer-menu li {
+    margin-bottom: 10px;
+  }
+  
+  .footer-menu a {
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  .footer-menu a:hover {
+    color: #ccc;
+  }
+  

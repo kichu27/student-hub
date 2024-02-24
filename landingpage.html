@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <title>Home Page</title>
+    <link rel="stylesheet" type="text/css" href="Homepage.css">
+
+    <style>
+
+        .div2{
+
+
+            border-radius: 30px;
+            
+            border: 3px solid ;
+            border-color: #fff;
+            
+                }
+
+.formdiv{
+
+height: 100vh;
+width: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-left: 400px;
+
+}
+               
+                            .feedback-form {
+                                max-width: 800px;
+                                margin: 0 auto;
+                                padding: 20px;
+                                border: 4px solid #ffffff;
+                                border-radius: 10px;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                flex-direction: column;
+                            }
+                    
+                            .feedback-form label {
+                                display: block;
+                                margin-bottom: 10px;
+                                text-align: center;
+                            }
+                    
+                            .feedback-form input[type="text"],
+                            .feedback-form input[type="email"],
+                            .feedback-form textarea {
+                                width: 300px;
+                                padding: 10px;
+                                margin-bottom: 20px;
+                                border: 1px solid #ccc;
+                                border-radius: 30px;
+                                text-align: center;
+
+                            }
+                    
+                            .feedback-form textarea {
+                                resize: vertical;
+                            }
+                    
+                            .feedback-form input[type="submit"] {
+                                background-color: #007bff;
+                                color: white;
+                                border: none;
+                                padding: 10px 20px;
+                                border-radius: 5px;
+                                cursor: pointer;
+                            }
+                    
+                            .feedback-form input[type="submit"]:hover {
+                                background-color: #0056b3;
+                            }
+
+                            body{
+                                background-image: url("/ss4.jpg");
+                                background-repeat: no-repeat;
+                                background-size: cover
+                            }
+                            .ud{
+                                margin-bottom: 100px;
+                            line-height: 50px;
+                                font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+                            }
+                    
+                            h1{
+                                font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+                            }
+                            .bu{
+                                margin-left: 30px;
+                            }
+
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="nav1">
+            <div class="box">
+            
+                <div class="menu">
+                    <ul>
+                        <li class="opt"><a href="/landingpage">Home</a></li>
+                        <li class="opt"><a href="/style1mona">College</a></li>
+                        <li class="opt"><a href="/hostel">Hostel </a>
+                        </li>
+                        <li class="opt"><a href="#">Shops</a>
+                        <ul>
+                            <li><a href="/psg">Pari General Store</a></li>
+                            <li><a href="/mc">Morya Cyber Cafe</a></li>
+                            <li><a href="/sln">Saloon</a></li>
+                            <li><a href="/px">Patil Xerox</a></li>
+                        </ul>
+                        </li>
+                        <li class="opt"><a href="#">Hotels</a> 
+                        <ul>
+                            <li><a href="/mcc">Met Cafe</a></li>
+                            <li><a href="/rsc">Rohit Snacks Corner</a></li>
+                            <li><a href="/uni">Unicorn </a></li>
+
+                    </ul>         
+                        </li>
+
+                        
+                        <li  class="opt"> <a  href="/businesses"   >View Shops</a>   </li>
+                        <li  class="opt"> <a  href="/blog"   >Blogs</a>  </li>
+                        <li  class="opt"> <a  href="/search"  >Search</a>   </li>
+                        <li  class="opt"> <a  href="/chat"  >Chat</a>   </li>
+                        <li  class="opt"> <a href="/login"  >Logout</a>    </li>
+                </div>
+            </div>    
+        </nav>
+
+                    
+    </header>
+
+    
+    <div class="h-text">
+        <h1>STUDENT <span>HUB</h1><br>
+        <h3>A Comprehessive Guide To Campus Life</h3><br><br>
+
+    </div>
+
+    <div class="formdiv">
+
+<div class="ud">
+    <h1>Have any Queries ?!</h1>
+    <h3>WANT TO PROMOTE YOUR SHOP FILL THE FORM BELOW !</h3>
+</div>
+
+<div>
+
+    
+<form class="feedback-form" action="/landingpage" method="POST">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required>
+    
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+    
+    <label for="message">Message:</label>
+    <textarea id="message" name="message" required></textarea>
+    
+    <input  class="bu" type="submit" value="Submit">
+</form>
+        
+
+</div>
+    
+        </div>
+    </div>
+</body>
+</html>

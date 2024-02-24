@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <title>USER LIST</title>
+  <style media="screen">
+    body {
+      background-color: #f6f6f6;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    #mydiv {
+      text-align: center;
+      padding: 20px 0;
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    #mydiv1 {
+      padding: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid #ddd;
+      background-color: white;
+    }
+
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    tr:hover {
+      background-color: #f2f2f2;
+    }
+
+    .remove-btn {
+      background-color: #f44336;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .remove-btn:hover {
+      background-color: #d32f2f;
+    }
+
+    .update-btn {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .update-btn:hover {
+      background-color: #0056b3;
+    }
+
+    .go-back {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      text-decoration: none;
+      color: #007bff;
+      border: 1px solid #007bff;
+      padding: 10px 20px;
+      border-radius: 5px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .go-back:hover {
+      background-color: #007bff;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+<div id="mydiv">
+  <h1>LIST OF USERS</h1>
+</div>
+
+<div id="mydiv1">
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Action</th>
+      <th>Action</th> 
+    </tr>
+
+    <% if (user.length > 0) { %>
+      <% for (var i = 0; i < user.length; i++) { %>
+        <tr>
+          <td><%- user[i].id %></td>
+          <td><%- user[i].username %></td>
+          <td><%- user[i].email %></td>
+          <td>
+            <form method="POST" action="/remove-user">
+              <input type="hidden" name="userId" value="<%= user[i].id %>">
+              <button type="submit" class="remove-btn">Remove</button>
+            </form>
+          </td>
+          <td>
+            <form method="POST" action="/make-sk">
+              <input type="hidden" name="userId" value="<%= user[i].id %>">
+              <button type="submit" class="update-btn">Make SK</button>
+            </form>
+          </td>
+        </tr>
+      <% } %>
+    <% } %>
+  </table>
+
+  <a href="/feedback" class="go-back">VIEW FEEDBACKS</a>
+  <a href="/bl" class="go-back">VIEW SHOPS </a>
+  <a href="/writeblog" class="go-back">WRITE BLOGS</a>
+  <a href="/chatu" class="go-back">Chat</a>
+  
+</div>
+</body>
+</html>
