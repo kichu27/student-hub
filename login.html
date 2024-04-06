@@ -107,10 +107,24 @@ border-color: #fff;
     
     .div3{
 
-display: flex;
-justify-content: center;
-align-items: center;
-flex-direction: row;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+        position: relative;
+    }
+
+    .links{
+   
+        display: flex;
+        justify-content:center;
+        align-items: center;
+        flex-direction: row;
+ 
+       height: max-content;
+       width: max-content;
+      
+  
 
     }
  
@@ -123,23 +137,27 @@ flex-direction: row;
         <img src="i1.png" height="190px" width="190px" />
         <h1>STUDENT HUB</h1>
         <h4>One Step Closer To Your Friendly Guide !</h4>
-     
+        <div class="links"> 
+
+            <a href="/al" class="cta-button">Admin Login</a>
+            <a href="/sl" class="cta-button">Shopkeeper Login</a>
+        
+                    </div>
             </div>
 
-            <div class="div2"><form action="/login" method="post">
+            <div class="div2">
+                
+                <form action="/login" method="post">
                 <h2>User Login</h2>
                 <input type="text" name="username" placeholder="Username" required><br>
                 <input type="password" name="password" placeholder="Password" required><br>
+                <div class="div3"><input type="submit" value="SUBMIT">
+                <a href="/" class="cta-button">SIGNUP</a>
+                </div> 
+                </form>
 
-
-
-<div class="div3"><input type="submit" value="SUBMIT">
-    <a href="/" class="cta-button">SIGNUP</a></div>
-                
-
-
-            </form>
-        
+           
+            
         </div>
     
 </body>

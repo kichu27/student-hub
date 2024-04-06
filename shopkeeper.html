@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<head>
+    <style>
+        .container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 85%;
+            height: 600px;
+            background: url(BG1.avif) no-repeat;
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px;
+        }
+        .container .content {
+            position: absolute;
+             top: 0;
+            left: 0;
+            width: 55%;
+            height: 100%;
+            background: transparent;
+            padding: 70px;
+            color: black;
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column;
+        }
+        .text-sci h2 {
+            font-size: 60px;
+            line-height: 0.8;
+            font-family:'Times New Roman', Times, serif;
+        }
+        .text-sci h2 span {
+            font-size: 30px;
+            line-height: 0.1;
+        }
+        .text-sci p {
+            font-size: 18px;
+            line-height: 1;
+            margin: 20px 0;
+            
+        }
+        .social-icons a i {
+        font-size: 22px;
+        color: black;
+        margin-right: 10px;
+        transition: .5s ease;
+    }
+    .social-icons a:hover i {
+        transform: scale(1.2);
+    }
+        .container .logreg-box {
+            position: absolute;
+             top: 0;
+            right: 0;
+            width: calc(100% - 55%);
+            height: 100%;
+        }
+            /*  */
+.wrapper {
+    position: relative;
+    width: 400px;
+    height: 440px; 
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, .5);
+    border-radius: 20px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 30px rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 700px; 
+    margin-top: 70px;
+    overflow: hidden;
+}
+.wrapper .icon-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 45px;
+    height: 45px;
+    background: #162938;
+    font-size: 2rem;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom-left-radius: 20px;
+    cursor: pointer;
+    z-index: 1;
+}
+.form-box h2 {
+    font-size: 2rem;
+    color: #162938;
+    text-align: center;
+}
+.input-box {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    border-bottom: 2px solid #162938;
+    margin: 30px 0;
+}
+.input-box label {
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    transform: translateY(-50%);
+    font-size: 1rem;
+    color: #162938;
+    font-weight: 500;
+    pointer-events: none;
+    transition: .5s;
+}
+.input-box input:focus~label,
+.input-box input:valid~label {
+    top: -5px;
+}
+.input-box input {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    color: #162938;
+    font-weight: 600;
+    padding: 0 35px 0 5px;
+}
+.input-box .icon {
+    position: absolute;
+    right: 8px;
+    font-size: 1.2rem;
+    color: #162938;
+    line-height: 57px;
+}
+.remember-forgot {
+    font-size: .9rem;
+    color: #162938;
+    font-weight: 500;
+    margin: 15px 0 15px;
+    display: flex;
+    justify-content: space-between;
+}
+.remember-forgot label input {
+    accent-color: #162938;
+    margin-right: 3px;
+}
+.remember-forgot a {
+    color: #162938;
+    text-decoration: none;
+}
+.remember-forgot a:hover {
+    text-decoration: underline;
+}
+.btn {
+    width: 100%;
+    height: 40px;
+    background: #162938;
+    border: none;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    color: white;
+    font-weight: 500;
+}
+.login-register {
+    font-size: .9rem;
+    color: #162938;
+    text-align: center;
+    font-weight: 500;
+    margin: 25px 0 10px;
+}
+.login-register p a {
+    color: #162938;
+    text-decoration: none;
+    font-weight: 600;
+}
+.login-register p a:hover {
+    text-decoration: underline;
+}
+    </style>
+   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+   </head>
+<body>
+    <div class="container">
+        <div class="content">
+            
+            <div class="text-sci">
+                <h2><br><br>STUDENT HUB<br><span>Your Comprehensive Guide To Campus Life.</span></h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis praesentium 
+                    expedita ullam at voluptatem,</P> 
+                    <div class="social-icons">
+                        <a href="#"><i class='bx bxl-linkedin'></i></a>
+                        <a href="#"><i class='bx bxl-facebook'></i></a>
+                        <a href="#"><i class='bx bxl-instagram'></i></a>
+                        <a href="#"><i class='bx bxl-twitter'></i></a>
+                     </div>
+            </div>
+        </div>
+   
+        
+        <div class="wrapper">
+            <div class="form-box login">
+                <h2>Login</h2>
+                <form action="/login" method="post">
+                    <div class="input-box">
+                        <span class="icon"><i class='bx bxl-gmail'></i></span>
+                        <input type="text"  name="username" required>
+                        <label> username</label>
+                    </div>
+                    <div class="input-box">
+                        <span class="icon"><i class='bx bxs-lock-alt'></i></span>
+                        <input type="password" name="password" required>
+                        <label>password</label>
+                    </div>
+                  
+                    <button type="submit"  value = "SUBMIT" class="btn">Login</button>
+                 
+                </form>
+            </div>
+    </div>
+   
+</body>
+</html>

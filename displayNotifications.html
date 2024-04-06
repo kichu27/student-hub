@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display Notifications</title>
+    <style>
+        /* Add your CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .notification {
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .notification:hover {
+            transform: translateY(-5px);
+        }
+
+        .notification-content {
+            margin-bottom: 10px;
+        }
+
+        .field-label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        .field-value {
+            color: #333;
+        }
+
+        .notification-description {
+            margin-top: 10px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Notifications</h1>
+        <div id="notificationsContainer">
+            <!-- Notifications will be displayed here dynamically -->
+        </div>
+    </div>
+
+    <!-- Additional content to provide context -->
+    <div class="container">
+        <h2>About Notifications</h2>
+        <p>This page displays notifications about promotions, special offers, and events from various sources.</p>
+        <p>Stay updated with the latest information and take advantage of the opportunities provided.</p>
+    </div>
+    
+    <script>
+        // Fetch notifications from the server
+        fetch('/notifications')
+            .then(response => response.json())
+            .then(data => {
+                const notificationsContainer = document.getElementById('notificationsContainer');
+
+                // Clear previous notifications
+                notificationsContainer.innerHTML = '';
+
+                // Display notifications
+                data.forEach(notification => {
+                    const notificationElement = document.createElement('div');
+                    notificationElement.classList.add('notification');
+
+                    // Add content for each notification field
+                    const htmlContent = `
+                        <div class="notification-content">
+                            <p><span class="field-label">Notification:</span> <span class="field-value">${notification.notification}</span></p>
+                            <p><span class="field-label">Promotion:</span> <span class="field-value">${notification.promotion}</span></p>
+                            <p><span class="field-label">Special Offer:</span> <span class="field-value">${notification.special_offer}</span></p>
+                            <p><span class="field-label">Event:</span> <span class="field-value">${notification.event}</span></p>
+                
+                        </div>
+                       
+                    `;
+                    notificationElement.innerHTML = htmlContent;
+
+                    notificationsContainer.appendChild(notificationElement);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching notifications:', error);
+            });
+    </script>
+</body>
+</html>

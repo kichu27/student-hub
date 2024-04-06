@@ -150,6 +150,35 @@ font-size: larger;
 
 </form> </div>
 
+<div class="divmain">
+    <form action="/notification" method="POST">
+
+        <div class="formdiv">
+            <label for="notification">Notification:</label><br>
+            <textarea id="notification" name="notification" required></textarea>
+        </div>
+    
+        <div class="formdiv">
+            <label for="promotion">Promotion:</label><br>
+            <input type="text" id="promotion" name="promotion">
+        </div>
+    
+        <div class="formdiv">
+            <label for="specialOffer">Special Offer:</label><br>
+            <input type="text" id="specialOffer" name="specialOffer">
+        </div>
+    
+        <div class="formdiv">
+            <label for="event">Event:</label><br>
+            <input type="text" id="event" name="event">
+        </div>
+    
+        <button type="submit" class="cta-button">Send Notification</button>
+    
+    </form>
+</div>
+
+
     <div class="bd">
 
         <a href="/landingpage" class="cta-button">GO TO LANDING PAGE </a>
@@ -157,4 +186,5 @@ font-size: larger;
 
   
 </body>
+
 </html>

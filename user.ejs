@@ -121,6 +121,12 @@
               <button type="submit" class="update-btn">Make SK</button>
             </form>
           </td>
+          <td>
+            <form method="POST" action="/make-ad">
+              <input type="hidden" name="userId" value="<%= user[i].id %>">
+              <button type="submit" class="update-btn">Make ADMIN</button>
+            </form>
+          </td>
         </tr>
       <% } %>
     <% } %>
@@ -130,7 +136,7 @@
   <a href="/bl" class="go-back">VIEW SHOPS </a>
   <a href="/writeblog" class="go-back">WRITE BLOGS</a>
   <a href="/chatu" class="go-back">Chat</a>
-  
+  <a href="/logout" class="go-back">Logout</a>
 </div>
 </body>
 </html>

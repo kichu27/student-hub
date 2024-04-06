@@ -5,6 +5,10 @@ import express from 'express';
 import bodyParser from "body-parser";
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import cookieParser from "cookie-parser";
+import fs from "fs"
+
+
 
 //paths to the files are accessed by the below variables
 const __filename = fileURLToPath(import.meta.url);
@@ -17,6 +21,10 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }) );
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
+// Use cookie-parser middleware
+app.use(cookieParser());
+app.use(bodyParser.json());
+
 
 
 //database connectivity code 
@@ -45,14 +53,26 @@ res.sendFile( __dirname + "/index.html" ) ; // server response madhe file detoy 
 app.post('/', (req, res) => {
     try {
         const { username, email, password } = req.body;
-            var sql = "INSERT INTO users (username , email , password) VALUES ('"+username+"' ,'"+email+"' ,'"+password+"')" ;
 
+        // Validate username
+        if (!username || username.length !== 5) {
+            return res.status(400).send("Username must be 5 characters long.");
+        }
 
- con.query(sql , function(error , result)
- {
-  res.redirect("/login")
-});
+        // Validate password
+        if (!password || password.length !== 8) {
+            return res.status(400).send("Password must be 8 characters long and contain special characters.");
+        }
 
+        // Assuming you have a MySQL connection named `con`
+        var sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
+        con.query(sql, [username, email, password], function(error, result) {
+            if (error) {
+                console.error('Error:', error);
+                return res.status(500).send('Failed to register user');
+            }
+            res.redirect("/login");
+        });
     } catch (error) {
         console.error('Error:', error);
         res.status(500).send('Failed to register user');
@@ -67,6 +87,14 @@ app.get("/login", function(req,res){
 
 })
 
+app.get("/logout", function(req, res){
+   
+    res.clearCookie("username");
+    
+    res.sendFile("D:/projects/nodejs/login.html");
+});
+  
+
 
 app.post("/login", function(req, res) {
     try {
@@ -79,8 +107,9 @@ app.post("/login", function(req, res) {
                 console.error('Error executing query:', error);
                 res.status(500).send('Internal Server Error');
             } else {
-                // Check if any result found
+             
                 if (result.length > 0) {
+                    res.cookie('username', username);
                     // Check if the user is an admin
                     if (result[0].isadmin) {
                         res.redirect("/user");
@@ -106,13 +135,36 @@ app.post("/login", function(req, res) {
 
 
 
+
+
 // landing page bhavano // 
 
-app.get("/landingpage", function(req,res){
 
-    res.sendFile("D:/projects/nodejs/landingpage.html");
+app.get("/landingpage", function(req, res) {
+    
+    const username = req.cookies.username;
 
-})
+    if (!username) {
+       
+        return res.redirect("/login");
+    }
+
+    fs.readFile("D:/projects/nodejs/landingpage.html", "utf-8", function(err, data) {
+        if (err) {
+            console.error('Error reading file:', err);
+            return res.status(500).send('Internal Server Error');
+        }
+
+    
+        const modifiedHTML = data.replace('{{username}}', username);
+
+        res.send(modifiedHTML);
+    });
+});
+
+
+
+
 
 // admin panel sathi 
 
@@ -154,6 +206,27 @@ app.post("/make-sk", function(req, res) {
       const userId = req.body.userId;
   
       var sql = "UPDATE users SET issk = 1 WHERE id = ?";
+      
+      con.query(sql, [userId], function(error, result) {
+        if (error) {
+          console.error('Error executing query:', error);
+          res.status(500).send('Internal Server Error');
+        } else {
+          res.redirect("/user");
+        }
+      });
+    } catch (error) {
+      console.error('Error:', error);
+      res.status(500).send('Internal Server Error');
+    }
+});
+
+
+app.post("/make-ad", function(req, res) {
+    try {
+      const userId = req.body.userId;
+  
+      var sql = "UPDATE users SET isadmin = 1 WHERE id = ?";
       
       con.query(sql, [userId], function(error, result) {
         if (error) {
@@ -241,18 +314,23 @@ app.post("/landingpage", function(req, res) {
     
     
     try {
-        const { name, email, message } = req.body;
-            var sql = "INSERT INTO feedbacks (name , email , message) VALUES ('"+name+"' ,'"+email+"' ,'"+message+"')" ;
+        const sender = req.cookies.username;
+        const { email, message } = req.body;
+            var sql = "INSERT INTO feedbacks (name , email , message) VALUES ('"+sender+"' ,'"+email+"' ,'"+message+"')" ;
 
 
  con.query(sql , function(error , result)
  {
+    
     res.redirect("/landingpage")
+
 });
 
     } catch (error) {
+
         console.error('Error:', error);
         res.status(500).send('Failed to register user');
+
     }
    
 });
@@ -391,13 +469,16 @@ app.get('/writeblog', (req, res) => {
         res.sendFile(__dirname + '/writeblog.html' );
 });
 
+
+
+
 app.post('/submitblog', (req, res) => {
 
 
     try {
         const title = req.body.title;
         const content = req.body.content;
-    
+       
             var sql = "INSERT INTO blogs (title , content) VALUES ('"+title+"' ,'"+content+"')" ;
 
 
@@ -485,7 +566,7 @@ app.get("/mc", (req, res) => {
 
 
 
-
+// chat
 
 
 app.get("/chat", (req, res) => {
@@ -511,7 +592,16 @@ app.get("/chat", (req, res) => {
 
 
 app.post('/submit-message', (req, res) => {
-    const { sender, message } = req.body;
+    // Retrieve the username from the cookie
+    const sender = req.cookies.username;
+
+    // Check if the sender (username) is available
+    if (!sender) {
+        res.status(401).json({ error: 'Unauthorized. Please login first.' });
+        return;
+    }
+
+    const { message } = req.body;
     const timestamp = new Date().toISOString(); // Assuming MySQL server will handle the timestamp
 
     const sql = 'INSERT INTO messages (sender, message, timestamp) VALUES (?, ?, ?)';
@@ -522,7 +612,7 @@ app.post('/submit-message', (req, res) => {
             return;
         }
         console.log('Message inserted successfully');
-        res.redirect("/chat")
+        res.redirect("/chat");
     });
 });
 
@@ -550,9 +640,17 @@ app.get("/chatu", (req, res) => {
 
 
 
-
 app.post('/submit-messageu', (req, res) => {
-    const { sender, message } = req.body;
+    // Retrieve the username from the cookie
+    const sender = req.cookies.username;
+
+    // Check if the sender (username) is available
+    if (!sender) {
+        res.status(401).json({ error: 'Unauthorized. Please login first.' });
+        return;
+    }
+
+    const { message } = req.body;
     const timestamp = new Date().toISOString(); // Assuming MySQL server will handle the timestamp
 
     const sql = 'INSERT INTO messages (sender, message, timestamp) VALUES (?, ?, ?)';
@@ -563,7 +661,7 @@ app.post('/submit-messageu', (req, res) => {
             return;
         }
         console.log('Message inserted successfully');
-        res.redirect("/chat")
+        res.redirect("/chatu");
     });
 });
 
@@ -580,6 +678,163 @@ app.post('/clear-chat', (req, res) => {
         res.redirect('/chatu'); // Redirect to chat page after clearing chat
     });
 });
+
+
+
+
+
+// login pages
+
+
+app.get("/al" , function(req,res) // user requests for the  page 
+{
+res.sendFile( __dirname + "/adminlogin.html" ) ; // server response madhe file detoy ... 
+});
+
+app.get("/sl" , function(req,res) // user requests for the  page 
+{
+res.sendFile( __dirname + "/shopkeeper.html" ) ; // server response madhe file detoy ... 
+});
+
+
+
+app.get("/profile", (req, res) => {
+    // Retrieve username from the cookie
+    const username = req.cookies.username;
+    
+    // Check if the user is logged in
+    if (!username) {
+        return res.redirect("/login"); // Redirect to login if not logged in
+    }
+
+
+
+    // Query the database to retrieve user details
+    const sql = "SELECT * FROM users WHERE username = ?";
+    con.query(sql, [username], (error, result) => {
+        if (error) {
+            console.error('Error executing query:', error);
+            return res.status(500).send('Internal Server Error');
+        }
+        if (result.length === 0) {
+            return res.status(404).send('User not found');
+        }
+
+        // Render profile page with user details
+        res.render("profile", { user: result[0] });
+    });
+  
+});
+
+
+
+
+// Route to handle updating username
+app.post('/update-username', (req, res) => {
+    const newUsername = req.body['new-username'];
+    console.log(newUsername);
+    const userId = req.cookies.username; 
+    console.log(userId)
+    // Assuming you have a userId stored in cookies
+    // Assuming you have a function to update the username in the database
+    con.query('UPDATE users SET username = ? WHERE username = ?', [newUsername, userId], (err, result) => {
+        if (err) {
+            console.error('Error updating username:', err);
+            return res.status(500).send('Failed to update username');
+        }
+        res.redirect('/profile'); // Redirect to profile page after updating
+
+    });
+    res.cookie('username', newUsername);
+
+});
+
+// Route to handle updating email
+app.post('/update-email', (req, res) => {
+    const newEmail = req.body['new-email'];
+    const userId = req.cookies.username; // Assuming you have a userId stored in cookies
+    // Assuming you have a function to update the email in the database
+    con.query('UPDATE users SET email = ? WHERE username = ?', [newEmail, userId], (err, result) => {
+        if (err) {
+            console.error('Error updating email:', err);
+            return res.status(500).send('Failed to update email');
+        }
+        res.redirect('/profile'); // Redirect to profile page after updating
+    });
+});
+
+app.post('/update-password', (req, res) => {
+    const newPassword = req.body['new-password'];
+    const userId = req.cookies.username; // Assuming you have a userId stored in cookies
+    // Assuming you have a function to update the password in the database
+    con.query('UPDATE users SET password = ? WHERE username = ?', [newPassword, userId], (err, result) => {
+        if (err) {
+            console.error('Error updating password:', err);
+            return res.status(500).send('Failed to update password');
+        }
+        res.redirect('/profile'); // Redirect to profile page after updating
+    });
+});
+
+
+
+
+app.post('/notification', (req, res) => {
+    const { notification, promotion, specialOffer, event } = req.body;
+  
+    const sql = 'INSERT INTO shop_notifications (notification, promotion, special_offer, event) VALUES (?, ?, ?, ?)';
+    con.query(sql, [notification, promotion, specialOffer, event], (error, results) => {
+      if (error) {
+        console.error('Error inserting data into database:', error);
+        res.status(500).send('Error inserting data into database');
+        return;
+      }
+      console.log('Data inserted into database successfully');
+      res.status(200).send('Data inserted into database successfully');
+    });
+  });
+  
+
+  function deleteOldRecords() {
+    con.query(
+      'DELETE FROM shop_notifications WHERE TIMESTAMPDIFF(MINUTE, created_at, NOW()) >= 2',
+      (error, results) => {
+        if (error) {
+          console.error('Error deleting old records:', error);
+          return;
+        }
+        console.log('Old records deleted successfully');
+      }
+    );
+  }
+  
+
+  setInterval(deleteOldRecords, 2 * 60 * 1000);
+  
+
+
+  app.get('/notifications', (req, res) => {
+    con.query(
+      'SELECT * FROM shop_notifications',
+      (error, results) => {
+        if (error) {
+          console.error('Error fetching notifications:', error);
+          res.status(500).json({ error: 'Error fetching notifications' });
+          return;
+        }
+        res.json(results);
+      }
+    );
+  });
+  app.get('/noti', (req, res) => {
+    res.sendFile(__dirname + '/displayNotifications.html');
+  });
+
+
+
+
+
+
 
 
 // server created using app.listen()
